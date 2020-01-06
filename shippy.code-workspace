@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "consignment-service",
+			"path": "consignment-service"
+		},
+		{
+			"name": "consignment-cli",
+			"path": "consignment-cli"
+		}
+	],
+	"settings": {}
+}
