@@ -7,6 +7,9 @@
 		{
 			"name": "consignment-cli",
 			"path": "consignment-cli"
+		},
+		{
+			"path": "vessel-service"
 		}
 	],
 	"settings": {}
