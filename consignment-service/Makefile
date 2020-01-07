@@ -2,7 +2,7 @@
 
 build:
 	protoc -I. --go_out=plugins=micro:. \
-		proto/consignment/consignment.proto
+	  proto/consignment/consignment.proto
 	@echo 'Build Docker image'
 	GOOS=linux GOARCH=amd64 go build
 	docker build -t consignment-service .

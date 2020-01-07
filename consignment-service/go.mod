@@ -3,6 +3,7 @@ module github.com/rickynyairo/shipping-container-platform/consignment-service
 go 1.13
 
 require (
+	github.com/go-log/log v0.2.0 // indirect
 	github.com/golang/protobuf v1.3.2
 	github.com/micro/go-micro v1.18.0
 	github.com/micro/protobuf v0.0.0-20180321161605-ebd3be6d4fdb // indirect
