@@ -13,7 +13,7 @@ WORKDIR /app/consignment-service
 # Copy the current code into our workdir
 COPY . .
 
-RUN go mod download github.com/rickynyairo/shipping-container-platform/consignment-service
+RUN go mod download
 
 # Build the binary, with a few flags which will allow
 # us to run this binary in Alpine. 
@@ -22,7 +22,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o consignment-servi
 # Here we're using a second FROM statement, which is strange,
 # but this tells Docker to start a new build process with this
 # image.
-FROM debian:latest
+FROM alpine:latest
 
 # Security related package, good to have.
 RUN apk --no-cache add ca-certificates
@@ -35,7 +35,7 @@ WORKDIR /app
 # we pull the binary from the container named `builder`, within
 # this build context. This reaches into our previous image, finds
 # the binary we built, and pulls it into this container. Amazing!
-COPY --from=builder /app/consignment-service/consignment-service .
+COPY --from=builder /app/consignment-service .
 
 # Run the binary as per usual! This time with a binary build in a
 # separate container, with all of the correct dependencies and

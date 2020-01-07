@@ -39,6 +39,7 @@ func (repo *Repository) GetAll()[]*pb.Consignment{
 // to give you a better idea.
 type service struct {
 	repo repository
+	vesselClient vesselProto.VesselServiceClient
 }
 
 // CreateConsignment - we created just one method on our service,
@@ -51,7 +52,7 @@ func (s *service) CreateConsignment(ctx context.Context, req *pb.Consignment, re
 		MaxWeight: req.Weight,
 		Capacity: int32(len(req.Containers)),
 	})
-	log.Printf("Found vessel: %s \n", vesselResponse.Vessel.Name)
+	fmt.Printf("Found vessel: %s \n", vesselResponse.Vessel.Name)
 	if err != nil {
 		return err
 	}
