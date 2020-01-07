@@ -1,5 +1,11 @@
 # Makefile for the consignment microservice
 
 build:
-	protoc -I. --go_out=plugins=grpc:. \
-	  proto/consignment/consignment.proto
+	protoc -I. --go_out=plugins=micro:. \
+		proto/consignment/consignment.proto
+	@echo 'Build Docker image'
+	GOOS=linux GOARCH=amd64 go build
+	docker build -t consignment-service .
+
+run:
+	docker run -p 50051:50051 consignment-service
