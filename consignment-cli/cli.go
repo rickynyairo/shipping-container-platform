@@ -1,15 +1,15 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"log"
 	"os"
 
-	"context"
-
-	pb "github.com/rickynyairo/shipping-container-platform/consignment-service/proto/consignment"
 	micro "github.com/micro/go-micro"
+	pb "github.com/rickynyairo/shipping-container-platform/consignment-service/proto/consignment"
+	pbVessel "github.com/rickynyairo/shipping-container-platform/vessel-service/proto/vessel"
 )
 
 const (
@@ -32,6 +32,17 @@ func main() {
 	service.Init()
 
 	client := pb.NewShippingServiceClient("consignment.service", service.Client())
+	vesselClient := pbVessel.NewVesselServiceClient("vessel.service", service.Client())
+	vessel := &pbVessel.Vessel{
+		Capacity:  1000,
+		MaxWeight: 5000,
+		Name:      "Shawshank Redemption",
+		Available: true,
+	}
+	_, err := vesselClient.Create(context.Background(), vessel)
+	if err != nil {
+		log.Fatalf("Could not create vessel: %v", err)
+	}
 	// Contact the server and print out its response.
 	file := defaultFilename
 	if len(os.Args) > 1 {
@@ -46,9 +57,9 @@ func main() {
 
 	r, err := client.CreateConsignment(context.Background(), consignment)
 	if err != nil {
-		log.Fatalf("Could not greet: %v", err)
+		log.Fatalf("Could not create consignment: %v", err)
 	}
-	log.Printf("Created: %t", r.Created)
+	log.Printf("Created: %t", r)
 
 	getAll, err := client.GetConsignments(context.Background(), &pb.GetRequest{})
 	if err != nil {

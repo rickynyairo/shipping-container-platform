@@ -21,16 +21,18 @@ type VesselRepository struct {
 // if capacity and max weight are below a vessels capacity and max weight,
 // then return that vessel.
 func (repository *VesselRepository) FindAvailable(spec *pb.Specification) (*pb.Vessel, error) {
-	filter := bson.D{{
-		"capacity",
-		bson.D{{
-			"$lte",
-			spec.Capacity,
-		}, {
-			"$lte",
-			spec.MaxWeight,
-		}},
-	}}
+	// filter:= bson.M{"capacity": bson.M{"$lte", spec.Capacity}}
+	filter:= bson.M{"name": "Shawshank Redemption"}
+	// filter := bson.D{{
+	// 	"capacity",
+	// 	bson.D{{
+	// 		"$lte",
+	// 		spec.Capacity,
+	// 	}, {
+	// 		"$lte",
+	// 		spec.MaxWeight,
+	// 	}},
+	// }}
 	var vessel *pb.Vessel
 	if err := repository.collection.FindOne(context.TODO(), filter).Decode(&vessel); err != nil {
 		return nil, err

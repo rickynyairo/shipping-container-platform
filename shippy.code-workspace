@@ -12,5 +12,7 @@
 			"path": "vessel-service"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"go.toolsGopath": "/home/nyairo/go"
+	}
 }
