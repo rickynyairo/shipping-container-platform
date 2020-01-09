@@ -13,6 +13,9 @@
 		},
 		{
 			"path": "user-service"
+		},
+		{
+			"path": "user-cli"
 		}
 	],
 	"settings": {

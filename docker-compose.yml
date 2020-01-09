@@ -52,6 +52,14 @@ services:
             - postgres_db
         networks: 
             - backend
+
+    user-cli:
+        build: ./user-cli
+        container_name: user-cli
+        depends_on: 
+            - user-service
+        networks: 
+            - backend
                 
     postgres_db:
         image: postgres
@@ -59,6 +67,7 @@ services:
             - 5432:5432
         networks: 
             - backend
+
     mongodb:
         image: mongo
         ports:
