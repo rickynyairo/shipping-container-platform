@@ -4,23 +4,44 @@ services:
 
     consignment-cli:
         build: ./consignment-cli
+        container_name: consignment-cli
         depends_on: 
             - consignment-service
             - vessel-service
-        
+        networks: 
+            - backend
 
     consignment-service:
         build: ./consignment-service
+        container_name: consignment-service
         ports:
             - 50051:50051
-
+        depends_on:
+            - datastore
         environment:
             MICRO_ADDRESS: ":50051"
-            DB_HOST: "datastore:27017"
+            DB_HOST: "mongodb://datastore:27017"
+        networks: 
+            - backend
 
     vessel-service:
         build: ./vessel-service
+        container_name: vessel-service
         ports:
             - 50052:50051
+        depends_on:
+            - datastore
         environment:
             MICRO_ADDRESS: ":50051"
+            DB_HOST: "mongodb://datastore:27017"
+        networks: 
+            - backend
+    
+    datastore:
+        image: mongo
+        ports:
+            - 27017:27017
+        networks: 
+            - backend
+networks:
+    backend:
