@@ -20,7 +20,7 @@ services:
             - datastore
         environment:
             MICRO_ADDRESS: ":50051"
-            DB_HOST: "mongodb://datastore:27017"
+            DB_HOST: "mongodb://mongodb:27017"
         networks: 
             - backend
 
@@ -33,11 +33,26 @@ services:
             - datastore
         environment:
             MICRO_ADDRESS: ":50051"
-            DB_HOST: "mongodb://datastore:27017"
+            DB_HOST: "mongodb://mongodb:27017"
         networks: 
             - backend
-    
-    datastore:
+
+    user-service:
+        build: ./user-service
+        ports:
+            - 50053:50051
+        environment:
+            MICRO_ADDRESS: ":50051"
+        networks: 
+            - backend
+
+    postgres:
+        image: postgres
+        ports:
+            - 5432:5432
+        networks: 
+            - backend
+    mongodb:
         image: mongo
         ports:
             - 27017:27017
