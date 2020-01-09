@@ -59,7 +59,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not create consignment: %v", err)
 	}
-	log.Printf("Created: %t", r)
+	log.Printf("Created: %t", r.Created)
 
 	getAll, err := client.GetConsignments(context.Background(), &pb.GetRequest{})
 	if err != nil {

@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
-	pb "github.com/rickynyairo/shipping-container-platform/vessel-service/proto/vessel"
 	micro "github.com/micro/go-micro"
+	pb "github.com/rickynyairo/shipping-container-platform/vessel-service/proto/vessel"
 	"log"
 	"os"
 )
+
 const (
 	defaultHost = "datastore:27017"
 )
@@ -29,11 +30,10 @@ func main() {
 	}
 	defer client.Disconnect(context.TODO())
 
-	vesselCollection := client.Database("shippy").Collection("vessel")
+	vesselCollection := client.Database("shipping_container_platform").Collection("vessel")
 	repository := &VesselRepository{
 		vesselCollection,
 	}
-
 
 	// Register our implementation with
 	pb.RegisterVesselServiceHandler(srv.Server(), &Handler{repository})

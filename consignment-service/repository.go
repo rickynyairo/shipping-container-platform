@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
-	"fmt"
 	pb "github.com/rickynyairo/shipping-container-platform/consignment-service/proto/consignment"
 	"go.mongodb.org/mongo-driver/mongo"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type repository interface {
@@ -25,11 +25,7 @@ func (repository *MongoRepository) Create(consignment *pb.Consignment) error {
 
 // Get all
 func (repository *MongoRepository) GetAll() ([]*pb.Consignment, error) {
-	cur, err := repository.collection.Find(context.Background(), nil, nil)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Println("Getting all consignments ==> ", cur)
+	cur, err := repository.collection.Find(context.Background(), bson.M{})
 	var consignments []*pb.Consignment
 	for cur.Next(context.Background()) {
 		var consignment *pb.Consignment

@@ -3,10 +3,9 @@ package main
 
 import (
 	"context"
-	"fmt"
+
 	pb "github.com/rickynyairo/shipping-container-platform/vessel-service/proto/vessel"
 )
-
 
 type Handler struct {
 	repository
