@@ -1,4 +1,4 @@
-package user_service
+package shippy_user
 
 import (
 	"github.com/jinzhu/gorm"

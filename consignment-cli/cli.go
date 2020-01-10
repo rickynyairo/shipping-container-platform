@@ -29,11 +29,11 @@ func parseFile(file string) (*pb.Consignment, error) {
 	return consignment, err
 }
 func main() {
-	service := micro.NewService(micro.Name("consignment.cli"))
+	service := micro.NewService(micro.Name("shippy.conscli"))
 	service.Init()
 
-	client := pb.NewShippingServiceClient("consignment.service", service.Client())
-	vesselClient := pbVessel.NewVesselServiceClient("vessel.service", service.Client())
+	client := pb.NewShippingServiceClient("shippy.consignment", service.Client())
+	vesselClient := pbVessel.NewVesselServiceClient("shippy.vessel", service.Client())
 	vessel := &pbVessel.Vessel{
 		Capacity:  1000,
 		MaxWeight: 5000,

@@ -32,7 +32,7 @@ func main() {
 
 	srv := micro.NewService(
 		// the name of the service given in the protobuf definition
-		micro.Name("consignment.service"),
+		micro.Name("shippy.consignment"),
 		micro.Version("latest"),
 		micro.WrapHandler(AuthWrapper),
 	)
@@ -50,7 +50,7 @@ func main() {
 
 	consignmentCollection := client.Database("shipping_container_platform").Collection("consignments")
 	repository := &MongoRepository{consignmentCollection}
-	vesselClient := vesselProto.NewVesselServiceClient("vessel.service", srv.Client())
+	vesselClient := vesselProto.NewVesselServiceClient("shippy.vessel", srv.Client())
 
 	h := &Handler{repository, vesselClient}
 
@@ -84,7 +84,7 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 		log.Println("Authenticating with token: ", token)
 
 		// Auth here
-		authClient := userProto.NewUserServiceClient("user.service", client.DefaultClient)
+		authClient := userProto.NewUserServiceClient("shippy.user", client.DefaultClient)
 		_, err := authClient.ValidateToken(context.Background(), &userProto.Token{
 			Token: token,
 		})

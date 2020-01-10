@@ -15,7 +15,7 @@ func main() {
 	cmd.Init()
 
 	// Create new greeter client
-	client := pb.NewUserServiceClient("user.service", microclient.DefaultClient)
+	client := pb.NewUserServiceClient("shippy.user", microclient.DefaultClient)
 
 	name := "Ricky Nyairo"
 	email := "rickynyairo89@gmail.com"
