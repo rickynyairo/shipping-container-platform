@@ -16,6 +16,9 @@
 		},
 		{
 			"path": "user-cli"
+		},
+		{
+			"path": "email-service"
 		}
 	],
 	"settings": {

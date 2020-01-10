@@ -38,9 +38,9 @@ func main() {
 
 	// Init will parse the command line flags.
 	srv.Init()
-
+	pubsub := srv.Server().Options().Broker
 	// Register handler
-	pb.RegisterUserServiceHandler(srv.Server(), &Handler{repo, tokenService})
+	pb.RegisterUserServiceHandler(srv.Server(), &Handler{repo, tokenService, pubsub})
 
 	// Run the server
 	if err := srv.Run(); err != nil {

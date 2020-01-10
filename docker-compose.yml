@@ -48,8 +48,10 @@ services:
             DB_PORT: "5432"
             DB_USER: "postgres"
             DB_PASSWORD: ""
+            GO_MICRO_BROKER: "nats"
         depends_on:
             - postgres_db
+            - nats
         networks: 
             - backend
 
@@ -58,6 +60,25 @@ services:
         container_name: user-cli
         depends_on: 
             - user-service
+        networks: 
+            - backend
+
+    email-service:
+        build: ./email-service
+        container_name: email-service
+        environment: 
+            GO_MICRO_BROKER: "nats"
+        depends_on: 
+            - user-service
+        networks: 
+            - backend
+
+    nats:
+        image: nats
+        expose: 
+            - 4222
+        ports:
+            - 8222:8222
         networks: 
             - backend
                 
