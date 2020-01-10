@@ -38,9 +38,10 @@ func main() {
 
 	// Init will parse the command line flags.
 	srv.Init()
-	pubsub := srv.Server().Options().Broker
+	publisher := micro.NewPublisher("user.created", srv.Client())
+	// pubsub := srv.Server().Options().Broker
 	// Register handler
-	pb.RegisterUserServiceHandler(srv.Server(), &Handler{repo, tokenService, pubsub})
+	pb.RegisterUserServiceHandler(srv.Server(), &Handler{repo, tokenService, publisher})
 
 	// Run the server
 	if err := srv.Run(); err != nil {
