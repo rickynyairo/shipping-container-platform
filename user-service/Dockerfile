@@ -8,7 +8,7 @@ WORKDIR /app/user-service
 COPY . .
 
 # RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -o user-service -a -installsuffix cgo main.go handler.go repository.go database.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o user-service -a -installsuffix cgo main.go handler.go repository.go database.go token_service.go
 
 
 FROM alpine:latest

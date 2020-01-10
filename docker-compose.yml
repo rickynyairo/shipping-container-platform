@@ -17,7 +17,7 @@ services:
         ports:
             - 50051:50051
         depends_on:
-            - datastore
+            - mongodb
         environment:
             MICRO_ADDRESS: ":50051"
             DB_HOST: "mongodb://mongodb:27017"
@@ -30,7 +30,7 @@ services:
         ports:
             - 50052:50051
         depends_on:
-            - datastore
+            - mongodb
         environment:
             MICRO_ADDRESS: ":50051"
             DB_HOST: "mongodb://mongodb:27017"
@@ -47,7 +47,7 @@ services:
             DB_HOST: "postgres_db"
             DB_PORT: "5432"
             DB_USER: "postgres"
-            DB_PASSWORD: "postgres"
+            DB_PASSWORD: ""
         depends_on:
             - postgres_db
         networks: 
