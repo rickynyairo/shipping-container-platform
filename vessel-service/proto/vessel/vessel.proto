@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package shippy.vessel;
+package go.micro.api.vessel;
 
 service VesselService {
   rpc FindAvailable(Specification) returns (Response) {}

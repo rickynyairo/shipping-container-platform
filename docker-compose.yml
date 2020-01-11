@@ -82,5 +82,21 @@ services:
             - 27017:27017
         networks: 
             - backend
+    
+    micro:
+        image: micro/micro
+        environment:
+            # MICRO_SERVER_ID: "shippy"
+            MICRO_REGISTRY: "mdns"
+            # MICRO_REGISTRY_ADDRESS: ":50051"
+            MICRO_API_NAMESPACE: " "
+            MICRO_API_HANDLER: "rpc"
+            MICRO_API_ADDRESS: ":8080"
+        ports:
+            - 8080:8080
+        networks:
+            - backend
+        command: api
+        
 networks:
     backend:

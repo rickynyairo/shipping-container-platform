@@ -18,6 +18,7 @@ type Handler struct {
 	repo         Repository
 	tokenService Authable
 	Publisher    micro.Publisher
+	Client       pb.UserServiceClient
 }
 
 func (srv *Handler) Get(ctx context.Context, req *pb.User, res *pb.Response) error {

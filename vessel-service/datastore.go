@@ -9,6 +9,7 @@ import (
 
 // CreateClient -
 func CreateClient(uri string) (*mongo.Client, error) {
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancelFunc := context.WithTimeout(context.Background(), 10*time.Second)
+	cancelFunc()
 	return mongo.Connect(ctx, options.Client().ApplyURI(uri))
 }

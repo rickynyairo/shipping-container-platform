@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package shippy.consignment; 
+package go.micro.api.consignment; 
 
 service ShippingService {
   rpc CreateConsignment(Consignment) returns (Response) {}

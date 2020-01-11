@@ -57,7 +57,7 @@ func (srv *TokenService) Encode(user *pb.User) (string, error) {
 		user,
 		jwt.StandardClaims{
 			ExpiresAt: expireToken,
-			Issuer:    "shippy.user",
+			Issuer:    "go.micro.api.user",
 		},
 	}
 
