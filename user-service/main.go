@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/micro/go-micro"
-	pb "github.com/rickynyairo/shipping-container-platform/user-service/proto/user"
+	// etcd "github.com/micro/go-micro/registry/etcd"
+	pb "github.com/rickynyairo/shipping-container-platform/user-service/proto/usertcd"
 	"log"
 )
 
@@ -34,20 +35,21 @@ func main() {
 		// This name must match the package name given in your protobuf definition
 		micro.Name("go.micro.api.user"),
 		micro.Version("latest"),
+		// micro.Registry(etcd.NewRegistry()),
 	)
 
 	// Init will parse the command line flags.
 	srv.Init()
 	publisher := micro.NewPublisher("user.created", srv.Client())
-	// pubsub := srv.Server().Options().Broker
-	client := pb.NewUserServiceClient("go.micro.api.greeter", srv.Client())
-	srv.Server().Handle(
-		srv.Server().NewHandler(
-			&Handler{Client: client},
-		),
-	)
+	// // pubsub := srv.Server().Options().Broker
+	// client := pb.NewUserServiceClient("go.micro.api.greeter", srv.Client())
+	// srv.Server().Handle(
+	// 	srv.Server().NewHandler(
+	// 		&Handler{Client: client},
+	// 	),
+	// )
 	// Register handler
-	pb.RegisterUserServiceHandler(srv.Server(), &Handler{repo, tokenService, publisher, client})
+	pb.RegisterUserServiceHandler(srv.Server(), &Handler{repo, tokenService, publisher})
 
 	// Run the server
 	if err := srv.Run(); err != nil {
