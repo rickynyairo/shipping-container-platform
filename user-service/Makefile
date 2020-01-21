@@ -16,4 +16,4 @@ run:
 		-e DB_USER=postgres \
 		-e DB_PASSWORD="" \
 		-e DB_PORT=5432 \
-		user-service
+		user-service:latest
