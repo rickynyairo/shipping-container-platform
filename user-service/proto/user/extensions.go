@@ -1,4 +1,4 @@
-package go_micro_api_user
+package shippy_auth
 
 import (
 	"github.com/jinzhu/gorm"
