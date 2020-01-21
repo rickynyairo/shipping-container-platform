@@ -1,10 +1,11 @@
-# Makefile for the consignment microservice
 
 build:
-	protoc -I. --go_out=plugins=micro:. \
-	  proto/consignment/consignment.proto
-	@echo 'Build Docker image'
-	# docker build -t consignment-service .
+	docker build -t consignment-service .
 
 run:
-	docker run -p 50051:50051 consignment-service
+	docker run --net="host" \
+		-p 50053 \
+		-e MICRO_SERVER_ADDRESS=:50053 \
+		-e MICRO_REGISTRY=mdns \
+		-e DB_HOST="mongodb://localhost:27017" \
+		consignment-service

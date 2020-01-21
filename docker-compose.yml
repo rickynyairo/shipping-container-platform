@@ -8,8 +8,6 @@ services:
         depends_on: 
             - consignment-service
             - vessel-service
-        networks: 
-            - backend
 
     consignment-service:
         build: ./consignment-service
@@ -19,10 +17,7 @@ services:
         depends_on:
             - mongodb
         environment:
-            MICRO_ADDRESS: ":50051"
-            DB_HOST: "mongodb://mongodb:27017"
-        networks: 
-            - backend
+            DB_HOST: "mongodb://localhost:27017"
 
     vessel-service:
         build: ./vessel-service
@@ -32,71 +27,77 @@ services:
         depends_on:
             - mongodb
         environment:
-            MICRO_ADDRESS: ":50051"
-            DB_HOST: "mongodb://mongodb:27017"
-        networks: 
-            - backend
+            DB_HOST: "mongodb://localhost:27017"
 
     user-service:
         build: ./user-service
         ports:
             - 50053:50051
         environment:
-            MICRO_ADDRESS: ":50051"
             DB_NAME: "postgres"
-            DB_HOST: "postgres_db"
+            DB_HOST: "localhost"
             DB_PORT: "5432"
             DB_USER: "postgres"
             DB_PASSWORD: ""
         depends_on:
             - postgres_db
-        networks: 
-            - backend
+        network_mode: host
 
     user-cli:
         build: ./user-cli
         container_name: user-cli
         depends_on: 
             - user-service
-        networks: 
-            - backend
 
     email-service:
         build: ./email-service
         container_name: email-service
         depends_on: 
             - user-service
-        networks: 
-            - backend
           
     postgres_db:
         image: postgres
         ports:
             - 5432:5432
-        networks: 
-            - backend
+        network_mode: host
 
     mongodb:
         image: mongo
         ports:
             - 27017:27017
-        networks: 
-            - backend
+        network_mode: host
     
     micro:
         image: micro/micro
         environment:
-            # MICRO_SERVER_ID: "shippy"
-            MICRO_REGISTRY: "mdns"
-            # MICRO_REGISTRY_ADDRESS: ":50051"
-            MICRO_API_NAMESPACE: " "
+            MICRO_REGISTRY: "etcd"
             MICRO_API_HANDLER: "rpc"
-            MICRO_API_ADDRESS: ":8080"
         ports:
             - 8080:8080
-        networks:
-            - backend
-        command: api
+        depends_on: 
+            - etcd
+        command: --registry_address=http://localhost:2379 api
+        network_mode: host
+    
+    etcd:
+        image: bitnami/etcd
+        ports:
+            - 2379:2379
+            - 2380:2380
+        environment:
+            ALLOW_NONE_AUTHENTICATION: "yes"
+            ETCD_ADVERTISE_CLIENT_URLS: "http://localhost:2379"
+            # ETCD_LISTEN_CLIENT_URLS: "http://etcd:2379"
+            ETCD_ADVERTISE_PEER_URLS: "http://localhost:2380"
+            # ETCD_LISTEN_PEER_URLS: "http://etcd:2380"
+        network_mode: host
+        # volumes:
+        #     - ./etcd.conf.yml:/opt/bitnami/etcd/conf/etcd.conf.yml
         
-networks:
-    backend:
+# volumes:
+#     etcd_data:
+#         driver: local
+
+# networks:
+#     backend:
+#         driver: bridge
