@@ -49,7 +49,7 @@ func main() {
 	// 	),
 	// )
 	// Register handler
-	pb.RegisterUserServiceHandler(srv.Server(), &Handler{repo, tokenService, publisher})
+	pb.RegisterAuthHandler(srv.Server(), &Handler{repo, tokenService, publisher})
 
 	// Run the server
 	if err := srv.Run(); err != nil {
