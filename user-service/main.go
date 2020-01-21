@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/micro/go-micro"
 	// etcd "github.com/micro/go-micro/registry/etcd"
-	pb "github.com/rickynyairo/shipping-container-platform/user-service/proto/usertcd"
+	pb "github.com/rickynyairo/shipping-container-platform/user-service/proto/user"
 	"log"
 )
 
